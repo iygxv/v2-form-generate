@@ -3,27 +3,9 @@
     <el-container class="container-main">
       <!-- 物料区 -->
       <el-aside width="250px" class="main-right">
-        <draggable
-          :list="componentConfig"
-          :group="{
-            name: 'people', // 同分组可以互相拖拽
-            pull: 'clone', // 拖拽变为复制
-            put: false // 是否允许拖入当前组
-          }"
-          itemKey="people"
-          :sort="false"
-          class="draggable-container"
-          animation="1000" >
-          <template #item="{ element }">
-            <el-tag effect="dark">
-              {{ element.name }}
-            </el-tag>
-          </template>
-        </draggable>
       </el-aside>
       <!-- 渲染区 -->
       <el-container>
-        <!-- <WidgetForm ref="configFormData" :configFormData="configFormData" /> -->
       </el-container>
       <!-- 属性区 -->
       <el-aside width="250px" class="main-left">属性配置区</el-aside>
@@ -32,33 +14,11 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-import componentConfig from '@/config/componentConfig.js'
 export default {
   components: {
-    draggable
   },
   data() {
     return {
-      componentConfig,
-      // 渲染区表单config
-      configFormData: {
-        // 拖拽区接收到的组件
-        list: [{ name: 123 }],
-        // 拖拽区el-form属性
-        config: {
-          labelWidth: 100,
-          labelPosition: 'right',
-          size: 'small'
-        }
-      },
-      // 选中的元素
-      widgetFormSelect: {
-        key: null,
-        options: {
-          placeholder: ''
-        }
-      }
     }
   }
 }

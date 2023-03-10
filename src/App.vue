@@ -1,12 +1,17 @@
 <template>
-  <Main/>
+  <div>
+    <exportVueFile />
+  </div>
+  <!-- <Main/> -->
 </template>
 
 <script>
 import Main from '@/components/main.vue'
+import exportVueFile from '@/components/example/exportVueFile'
 export default {
   components: {
-    Main
+    Main,
+    exportVueFile
   }
 }
 </script>

@@ -5,7 +5,7 @@ export default {
   plugins: [createVuePlugin()],
   server: {
     host: '0.0.0.0', // 配置ip 可以本地ip访问到项目
-    port: 8089,
+    port: 8080,
     open: true
   },
   resolve: {
