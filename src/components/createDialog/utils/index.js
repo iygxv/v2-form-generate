@@ -35,7 +35,7 @@ export function vueTemplate(strCb) {
   return context.code
 }
 
-export function vueScript(strCb) {
+export function vueScript(strCb, methodName, formName) {
   const context = createCodegenContext()
   const { push, indent, deindent, newLine } = context
   push(`<script>`)
@@ -47,6 +47,24 @@ export function vueScript(strCb) {
   push(`return {`)
   indent()
   push(strCb(context.indentLevel))
+  deindent()
+  push(`}`)
+  deindent()
+  push(`},`)
+  newLine()
+  push(`methods: {`)
+  indent()
+  push(`${methodName}() {`)
+  indent()
+  push(`this.$refs.${formName}.validate((valid) => {`)
+  indent()
+  push(` if(valid) {`)
+  indent()
+  push(`// 确定代码`)
+  deindent()
+  push(`}`)
+  deindent()
+  push(` })`)
   deindent()
   push(`}`)
   deindent()
@@ -67,3 +85,39 @@ export function cssStyle(cssStr) {
   push(`</style>`)
   return context.code
 }
+
+
+export const typeOption = [
+  {
+    value: 'input',
+    label: '文本(默认类型)'
+  },
+  {
+    value: 'select',
+    label: '下拉框'
+  },
+  {
+    value: 'radio',
+    label: '单选框'
+  },
+  {
+    value: 'upload',
+    label: '图片'
+  },
+  {
+    value: 'datepicker',
+    label: '时间'
+  },
+  {
+    value: 'number',
+    label: '数字'
+  },
+  {
+    value: 'textarea',
+    label: '多行文本'
+  },
+  {
+    value: 'slot',
+    label: '插槽'
+  }
+]

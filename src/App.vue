@@ -1,21 +1,22 @@
 <template>
-  <div>
-    <exportVueFile />
-  </div>
-  <!-- <Main/> -->
+  <Main/>
+ <!-- <div class="app">
+  <test/>
+ </div> -->
 </template>
 
 <script>
 import Main from '@/components/main.vue'
-import exportVueFile from '@/components/example/exportVueFile'
 export default {
   components: {
-    Main,
-    exportVueFile
+    Main
   }
 }
 </script>
 
 <style lang='scss' scoped>
-
+.app {
+  width: 100vw;
+  height: 100vh;
+}
 </style>

@@ -1,6 +1,7 @@
 import AppFrom from './Form'
+import MonacoEditor from './MonacoEditor'
 
-const components = [AppFrom]
+const components = [AppFrom, MonacoEditor]
 
 const install = function(Vue) {
   components.forEach((component) => {

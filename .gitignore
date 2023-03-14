@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+vue-form-generate
 *.local
 
 # Editor directories and files

@@ -1,48 +1,41 @@
 <template>
   <div class="main-page">
-    <el-container class="container-main">
-      <!-- 物料区 -->
-      <el-aside width="250px" class="main-right">
-      </el-aside>
-      <!-- 渲染区 -->
-      <el-container>
-      </el-container>
-      <!-- 属性区 -->
-      <el-aside width="250px" class="main-left">属性配置区</el-aside>
-    </el-container>
+    <el-button 
+      size="medium" 
+      type="primary" 
+      @click="createDialogVisible = true">
+      生成Dialog代码
+    </el-button>
+    <createDialog :visible="createDialogVisible" @close="close"/>
+
   </div>
 </template>
 
 <script>
+import createDialog from './createDialog'
 export default {
   components: {
+    createDialog
   },
   data() {
     return {
+      createDialogVisible: false
+    }
+  },
+  methods: {
+    close() {
+      this.createDialogVisible = false
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
-.container-main {
+.main-page {
+  width: 100vw;
   height: 100vh;
-}
-.main-right {
-  border-right: 1px solid #ccc;
-  padding: 10px;
-}
-.main-left {
-  border-left: 1px solid #ccc;
-  padding: 10px;
-}
-.draggable-container {
-  cursor: move;
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 25px;
-  gap: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
