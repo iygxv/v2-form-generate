@@ -16,6 +16,7 @@ export default {
     }
   },
   build: {
-    outDir: 'vue-form-generate',
+    outDir: 'vue_form_generate_static',
+    assetsDir: 'vue_form_generate_static/assets'
   }
 }

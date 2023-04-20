@@ -29,58 +29,38 @@ export function vueTemplate(strCb) {
   const { push, indent, deindent, newLine } = context
   push(`<template>`)
   indent()
+  // 插入关键代码
   push(strCb(context.indentLevel))
+  // 插入关键代码
   deindent()
   push(`</template>`)
   return context.code
 }
 
-export function vueScript(strCb, methodName, formName) {
+export function vueScript(strCb) {
   const context = createCodegenContext()
   const { push, indent, deindent, newLine } = context
   push(`<script>`)
   newLine()
   push(`export default {`)
   indent()
-  push(`data() {`)
-  indent()
-  push(`return {`)
-  indent()
+  // 插入关键代码
   push(strCb(context.indentLevel))
-  deindent()
-  push(`}`)
-  deindent()
-  push(`},`)
-  newLine()
-  push(`methods: {`)
-  indent()
-  push(`${methodName}() {`)
-  indent()
-  push(`this.$refs.${formName}.validate((valid) => {`)
-  indent()
-  push(` if(valid) {`)
-  indent()
-  push(`// 确定代码`)
-  deindent()
-  push(`}`)
-  deindent()
-  push(` })`)
-  deindent()
-  push(`}`)
-  deindent()
-  push(`}`)
+  // 插入关键代码
   deindent()
   push(`}`)
   newLine()
   push(`</script>`)
   return context.code
 }
-export function cssStyle(cssStr) {
+export function cssStyle(strCb) {
   const context = createCodegenContext()
   const { push, indent, deindent } = context
   push(`<style lang='scss' scoped>`)
   indent()
-  push(cssStr)
+  // 插入关键代码
+  push(strCb(context.indentLevel))
+  // 插入关键代码
   deindent()
   push(`</style>`)
   return context.code

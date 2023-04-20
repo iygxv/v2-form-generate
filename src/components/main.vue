@@ -4,7 +4,7 @@
       size="medium" 
       type="primary" 
       @click="createDialogVisible = true">
-      生成Dialog代码
+      生成后台相关Dialog代码
     </el-button>
     <createDialog :visible="createDialogVisible" @close="close"/>
 

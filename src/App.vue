@@ -1,8 +1,7 @@
 <template>
+ <div id="app">
   <Main/>
- <!-- <div class="app">
-  <test/>
- </div> -->
+ </div>
 </template>
 
 <script>
@@ -18,5 +17,6 @@ export default {
 .app {
   width: 100vw;
   height: 100vh;
+  background: burlywood;
 }
 </style>

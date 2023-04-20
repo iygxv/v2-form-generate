@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-dialog title="生成的字段" width="700px" append-to-body :visible.sync="dialogVisible">
+    <el-dialog title="代码生成" width="700px" append-to-body :visible.sync="dialogVisible">
       <el-form :model="dynamicValidateForm" status-icon ref="dynamicValidateForm" label-width="120px">
         <el-form-item label="dialog名" prop="dialogVar">
-          <el-input v-model="dynamicValidateForm.dialogVar" placeholder="请输入dialog名" maxlength="20"></el-input>
+          <el-input v-model="dynamicValidateForm.dialogVar" placeholder="请输入dialog名(默认是defaultDialog )" maxlength="20"></el-input>
         </el-form-item>
         <div class="info-item" v-for="(item, index) in dynamicValidateForm.detailList" :key="item.id">
           <el-form-item
@@ -100,7 +100,7 @@ export default {
       htmlCode: '',
       drawerVisible: false,
       dynamicValidateForm: {
-        dialogVar: 'test', //对话框变量
+        dialogVar: '', //对话框变量
         detailList: [
           {
             id: Date.now(),
@@ -145,7 +145,7 @@ export default {
       return this.dynamicValidateForm.detailList.map(item => item.propsName)
     },
     dialogVar() {
-      return this.dynamicValidateForm.dialogVar
+      return this.dynamicValidateForm.dialogVar || 'defaultDialog'
     },
     slotArr() {
       return this.dynamicValidateForm.detailList.filter(item => item.type === 'slot')
@@ -159,19 +159,12 @@ export default {
       this.drawerVisible = false
     },
     generateCode() {
-      this.jsCode = this.generateScriptCode(`handle${humpChange(this.dialogVar)}`, `${this.dialogVar}Form`)
+      this.jsCode = this.generateScriptCode(`save${humpChange(this.dialogVar)}`, `${this.dialogVar}Form`)
       this.htmlCode = this.generateTemplateCode()
-      // console.log(this.jsCode)
-      // console.log(this.htmlCode)
       this.$nextTick(() => {
         this.drawerVisible = true
         this.$refs.codeDrawer.initDrawer()
       })
-      // const fileName = `${this.dialogVar}.vue`
-      // this.codeStr = this.generateCode()
-      // console.log(this.codeStr)
-      // const blob = new Blob([this.codeStr], { type: 'text/plain;charset=utf-8' })
-      // saveAs(blob, fileName)
     },
     generateTemplateCode() {
       const { dialogVar } = this
@@ -213,7 +206,7 @@ export default {
         indent()
         push(`<el-button @click="${dialogVar}.dialogVisible = false;">取消</el-button>`)
         newLine()
-        push(`<el-button type="primary" @click="handle${humpChange(dialogVar)}">确定</el-button>`)
+        push(`<el-button type="primary" @click="save${humpChange(dialogVar)}">确定</el-button>`)
         deindent()
         push(`</template>`)
         deindent()
@@ -228,6 +221,10 @@ export default {
       return vueScript(
         indentLevel => {
           context.indentLevel = indentLevel
+          push(`data() {`)
+          indent()
+          push(`return {`)
+          indent()
           push(`${dialogVar}: {`)
           indent()
           push(`dialogVisible: false,`)
@@ -247,6 +244,28 @@ export default {
           push(this.generateFormItems(this.items, context.indentLevel))
           deindent()
           push(this.generateRules(this.items, context.indentLevel))
+          deindent()
+          push(`}`)
+          deindent()
+          push(`}`)
+          deindent()
+          push(`},`)
+          newLine()
+          push(`methods: {`)
+          indent()
+          push(`${methodName}() {`)
+          indent()
+          push(`this.$refs.${formName}.validate((valid) => {`)
+          indent()
+          push(` if(valid) {`)
+          indent()
+          push(`// 确定代码`)
+          deindent()
+          push(`}`)
+          deindent()
+          push(` })`)
+          deindent()
+          push(`}`)
           deindent()
           push(`}`)
           return context.code
@@ -394,7 +413,6 @@ export default {
     createDialogCode() {
       this.$refs.dynamicValidateForm.validate(valid => {
         if (valid) {
-          console.log(this.dynamicValidateForm.detailList)
           this.generateCode()
         }
       })
@@ -404,6 +422,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-dialog__wrapper {
+  background: transparent;
+}
 .info-item {
   border-top: 1px #000000 solid;
   padding-top: 20px;
