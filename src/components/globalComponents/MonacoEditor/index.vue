@@ -14,7 +14,7 @@ const mode = {
   js: 'javascript'
 }
 export default {
-  name: 'MonacoEditor',
+  name: 'appMonacoEditor',
   props: {
     type: String
   },

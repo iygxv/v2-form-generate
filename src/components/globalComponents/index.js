@@ -1,7 +1,7 @@
-import AppFrom from './Form'
-import MonacoEditor from './MonacoEditor'
-
-const components = [AppFrom, MonacoEditor]
+const modules = import.meta.globEager('./**/*.vue');
+const components = Object.values(modules).map((module) => {
+  return module.default || module;
+});
 
 const install = function(Vue) {
   components.forEach((component) => {
@@ -9,7 +9,6 @@ const install = function(Vue) {
   });
 };
 
-/* istanbul ignore if */
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue);
 }
